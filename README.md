@@ -69,7 +69,7 @@ harleth     ← Rama personal de harleth
 python -m venv .venv
 
 # Luego instala las dependencias
-pip install -r backend/requirements.txt
+pip install -r backend/requeriments.txt
 ```
 
 ---
