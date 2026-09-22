@@ -45,8 +45,8 @@ git push -u origin tu-nombre-de-rama
 
 ### 5. Crear el Pull Request (PR) en GitHub
 1. Entra al repositorio del proyecto en **GitHub**.
-2. Verás un banner amarillo que dice **"Compare & pull request"**. Haz clic ahí.
-3. Describe brevemente tus cambios y etiqueta a un compañero para que revise tu código antes de unirlo a la rama principal.
+2. Verás un banner verde que dice **"Compare & pull request"**. Haz clic ahí.
+3. Selecciona la rama **develop**, escribe brevemente tus cambios y crea el PR.
 
 
 ## 🌿 Estructura de ramas
