@@ -102,10 +102,10 @@ Confirma que te encuentras en tu rama personal para recibir los cambios de `main
 git checkout <tu-rama>
 ```
 
-## 4. Fusionar los cambios de main
-Une los cambios actualizados de la rama principal dentro de tu rama local:
+## 4. Fusionar los cambios de develop
+Une los cambios actualizados de la rama de desarrollo dentro de tu rama local:
 ```bash
-git merge origin/main
+git merge origin/develop
 ```
 
 > 💡 **Nota sobre conflictos:** Si Git encuentra modificaciones en las mismas líneas de código que tú tocaste, detendrá el proceso y te pedirá resolver los conflictos. Una vez resueltos en tu editor de código, ejecuta `git add .` y `git commit` para finalizar la fusión.
