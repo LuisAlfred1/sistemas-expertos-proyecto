@@ -2,7 +2,7 @@ from pydantic import BaseModel, Field
 from typing import Literal
 
 # Refacciones permitidas
-TipoRefaccion = Literal["Chiles rellenos", "Shucos", "Garnachas", "Ninguna"]
+TipoRefaccion = Literal["Chiles Rellenos", "Shucos", "Garnachas", "Ninguna"]
 
 class SolicitudRefaccion(BaseModel):
     elaborado: bool = Field(

@@ -1,10 +1,10 @@
 ; SISTEMA EXPERTO DE SELECCION DE REFACCIONES
 
 (deftemplate preparacion
-   (slot elaborado)       ; "si" o "no"
-   (slot lleva_carne)     ; "si" o "no"
-   (slot base_pan)        ; "si" o "no"
-   (slot tortilla)        ; "si" o "no"
+   (slot elaborado)       ; si o no
+   (slot lleva_carne)     ; si o no
+   (slot base_pan)        ; si o no
+   (slot tortilla)        ; si o no
 )
 
 (deftemplate resultado
@@ -20,7 +20,7 @@
 
 (defrule ofrecer-chiles-rellenos
    (declare (salience 100))
-   (preparacion (elaborado "si") (lleva_carne "si"))
+   (preparacion (elaborado si) (lleva_carne si))
    (not (resultado))
    =>
    (assert (resultado
@@ -35,7 +35,7 @@
 
 (defrule insuficientes-elaborados
    (declare (salience 100))
-   (preparacion (elaborado "si") (lleva_carne "no"))
+   (preparacion (elaborado si) (lleva_carne no))
    (not (resultado))
    =>
    (assert (resultado
@@ -50,7 +50,7 @@
 
 (defrule ofrecer-shucos
    (declare (salience 100))
-   (preparacion (elaborado "no") (base_pan "si"))
+   (preparacion (elaborado no) (base_pan si))
    (not (resultado))
    =>
    (assert (resultado
@@ -65,7 +65,7 @@
 
 (defrule ofrecer-garnachas
    (declare (salience 100))
-   (preparacion (elaborado "no") (base_pan "no") (tortilla "si"))
+   (preparacion (elaborado no) (base_pan no) (tortilla si))
    (not (resultado))
    =>
    (assert (resultado
@@ -80,7 +80,7 @@
 
 (defrule insuficientes-no-elaborados
    (declare (salience 100))
-   (preparacion (elaborado "no") (base_pan "no") (tortilla "no"))
+   (preparacion (elaborado no) (base_pan no) (tortilla no))
    (not (resultado))
    =>
    (assert (resultado
