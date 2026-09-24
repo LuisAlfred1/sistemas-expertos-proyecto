@@ -25,11 +25,13 @@ def evaluar_refaccion(
 
     env.run()
 
+    # Para imprimir si esta obteniendo la informacion correcta
     print("Motor ejecutado")
 
     resultado_template = env.find_template("resultado")
     resultados = list(resultado_template.facts())
 
+    # Para imprimir si esta obteniendo la informacion correcta
     print("Resultados:", resultados)
 
     if not resultados:
@@ -50,6 +52,7 @@ def evaluar_refaccion(
     else:
         estado = "exito"
 
+    # Para imprimir si esta obteniendo la informacion correcta
     print("Preparacion:", preparacion)
     print("Estado:", estado)
     
