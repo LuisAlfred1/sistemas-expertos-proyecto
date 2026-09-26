@@ -2,9 +2,20 @@
 
 Sistema de selección de refacciones guatemaltecas V.1
 
----
+## Descripción del proyecto
 
-# 🚀 Guía para Crear y Subir tu Rama al Proyecto
+Sistema experto desarrollado en Python para recomendar refacciones guatemaltecas de acuerdo con las características de la preparación y los ingredientes disponibles.
+
+El sistema utiliza CLIPS mediante la librería `clipspy` para procesar las reglas de conocimiento y FastAPI para exponer el motor experto mediante una API REST.
+
+Actualmente el sistema puede recomendar:
+
+- Chiles Rellenos
+- Shucos
+- Garnachas
+- Ninguna, cuando no se cumplen las condiciones necesarias
+
+## 🚀 Guía para Crear y Subir tu Rama al Proyecto
 
 Para mantener el proyecto organizado y evitar conflictos con el código de los demás, cada miembro del equipo debe trabajar en su propia rama. Sigue estos pasos en tu terminal:
 
@@ -64,15 +75,45 @@ harleth     ← Rama personal de harleth
 
 ## Instalación
 
-```bash
-# Primero crea un entorno virtual
-python -m venv .venv
+Desde la carpeta principal del proyecto, utilizar la terminal integrada de Visual Studio Code.
 
-# Luego instala las dependencias
+### Crear el entorno virtual
+
+```bash
+python -m venv .venv
+```
+
+### Activar el entorno virtual
+
+```powershell
+.\.venv\Scripts\Activate.ps1
+```
+
+### Instalar las dependencias
+
+```bash
 pip install -r backend/requirements.txt
 ```
 
----
+### Ejecutar la API
+
+```bash
+uvicorn backend.main:app --reload
+```
+
+Al iniciar correctamente, la API estará disponible en:
+
+```text
+http://127.0.0.1:8000
+```
+
+### Documentación interactiva
+
+Con la API en ejecución, abrir en el navegador:
+
+```text
+http://127.0.0.1:8000/docs
+```
 
 ## Proceso para unir los últimos cambios de la rama main
 
