@@ -98,7 +98,7 @@ pip install -r backend/requirements.txt
 ### Ejecutar la API
 
 ```bash
-uvicorn backend.main:app --reload
+.\.venv\Scripts\python.exe -m uvicorn backend.main:app --reload
 ```
 
 Al iniciar correctamente, la API estará disponible en:
