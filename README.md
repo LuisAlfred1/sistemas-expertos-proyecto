@@ -115,6 +115,9 @@ Con la API en ejecución, abrir en el navegador:
 http://127.0.0.1:8000/docs
 ```
 
+### Captura de prueba realizada
+![alt text](image.png)
+
 ## Proceso para unir los últimos cambios de la rama main
 
 Sigue estos pasos en tu terminal para integrar los cambios más recientes de **main** en tu rama actual de trabajo de forma segura.
