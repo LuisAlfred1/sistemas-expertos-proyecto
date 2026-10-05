@@ -1,0 +1,97 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background:
+        linear-gradient(
+            135deg,
+            #a4d3ee,
+            #fef3c7
+        );
+
+    color: #292524;
+}
+
+.container {
+    width: min(100% - 2rem, 42rem);
+    margin: 0 auto;
+    padding: 2rem 0;
+}
+
+.header {
+    margin-bottom: 1rem;
+}
+
+.panel,
+.result {
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    background: rgb(255 255 255 / 90%);
+    box-shadow: 0 0.5rem 1.5rem rgb(41 37 36 / 10%);
+}
+
+.panel h2,
+.result h2 {
+    margin-top: 0;
+}
+
+#evaluation-form {
+    display: grid;
+    gap: 1rem;
+}
+
+#evaluation-form label {
+    display: grid;
+    gap: 0.4rem;
+}
+
+#evaluation-form select,
+#evaluation-form input,
+#evaluation-form button {
+    min-height: 2.75rem;
+    padding: 0.6rem 0.75rem;
+    border: 1px solid #a8a29e;
+    border-radius: 0.4rem;
+    font: inherit;
+}
+
+#evaluation-form button {
+    border: 0;
+    background: #166534;
+    color: white;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+#evaluation-form button:disabled {
+    cursor: wait;
+    opacity: 0.7;
+}
+
+.api-status {
+    margin-bottom: 1rem;
+}
+
+.is-connected {
+    color: #166534;
+}
+
+.is-error {
+    color: #b91c1c;
+}
+
+.result {
+    margin-top: 1rem;
+}
+
+.result.is-error {
+    border: 1px solid #fca5a5;
+}
