@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Motor | Refacciones</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <main class="container">
+      <header class="header">
+        <h1>Motor | Refacciones</h1>
+      </header>
+
+      <p id="api-status" class="api-status" role="status">Conectando con la API...</p>
+
+      <section class="panel" aria-labelledby="form-title">
+        <h2 id="form-title">¿Qué refacción puedes preparar?</h2>
+        <form id="evaluation-form">
+          <label>
+            ¿La preparación es elaborada (por ejemplo, capeado en huevo)?
+            <select name="elaborado" required>
+              <option value="" selected disabled>Selecciona una opción</option>
+              <option value="true">Sí</option>
+              <option value="false">No</option>
+            </select>
+          </label>
+
+          <label>
+            ¿Tienes carne de res o cerdo?
+            <select name="lleva_carne" required>
+              <option value="" selected disabled>Selecciona una opción</option>
+              <option value="true">Sí</option>
+              <option value="false">No</option>
+            </select>
+          </label>
+
+          <label>
+            ¿Tienes pan de trigo como base?
+            <select name="base_pan" required>
+              <option value="" selected disabled>Selecciona una opción</option>
+              <option value="true">Sí</option>
+              <option value="false">No</option>
+            </select>
+          </label>
+
+          <label>
+            ¿Tienes tortilla pequeña de maíz?
+            <select name="tortilla" required>
+              <option value="" selected disabled>Selecciona una opción</option>
+              <option value="true">Sí</option>
+              <option value="false">No</option>
+            </select>
+          </label>
+
+          <label>
+            Ingredientes disponibles (opcional, separados por comas)
+            <input name="ingredientes_disponibles" type="text" placeholder="Ej. repollo, mostaza, salsa">
+          </label>
+
+          <button type="submit">Consultar recomendación</button>
+        </form>
+      </section>
+
+      <section id="result" class="result" aria-live="polite" hidden></section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
