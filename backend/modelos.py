@@ -1,46 +1,49 @@
-from pydantic import BaseModel, Field
 from typing import Literal
 
-# Refacciones permitidas
-TipoRefaccion = Literal["Chiles Rellenos", "Shucos", "Garnachas", "Ninguna"]
+from pydantic import BaseModel, Field
 
-class SolicitudRefaccion(BaseModel):
-    elaborado: bool = Field(
-        ...,
-        # description sirve para documentar el campo en la documentación generada por FastAPI, no afecta la validación de datos.
-        description="¿Es una preparación elaborada/compleja (ej. capeado en huevo)?",
+
+class SolicitudRecomendacion(BaseModel):
+    """Lo que envía el frontend: categoría e/o ingrediente ("cualquiera" = no filtra)."""
+
+    categoria: str = Field(
+        default="cualquiera",
+        # description solo documenta el campo en Swagger (/docs), no afecta la validación.
+        description="Categoría deseada: antojito, postre, plato_fuerte o cualquiera.",
     )
-    lleva_carne: bool = Field(
-        ...,
-        description="¿Se dispone de carne de res/cerdo (molida o picada)?",
-    )
-    base_pan: bool = Field(
-        ...,
-        description="¿Se dispone de pan de trigo como base?",
-    )
-    tortilla: bool = Field(
-        ...,
-        description="¿Se dispone de tortilla pequeña de maíz?",
-    )
-    ingredientes_disponibles: list[str] = Field(
-        default_factory=list,
-        description="Lista opcional de nombres de ingredientes específicos en inventario.",
+    ingrediente: str = Field(
+        default="cualquiera",
+        description="Ingrediente deseado (ej. pollo, platano, tortilla) o cualquiera.",
     )
 
 
-class ResultadoRefaccion(BaseModel):
-    estado: Literal["exito", "ingrediente_insuficientes", "error"]
-    refaccion_resultado: TipoRefaccion | None = Field(
-        default=None, description="Refacción guatemalteca recomendada por el sistema."
+class Recomendacion(BaseModel):
+    """Un platillo recomendado por el motor."""
+
+    platillo: str
+    nivel: Literal["exacta", "categoria", "ingrediente", "alternativa", "ninguna"]
+    puntaje: int = Field(
+        ..., description="100 coincidencia exacta, 80 un filtro, 50 alternativa."
     )
-    mensaje: str = Field(
-        ..., description="Mensaje informativo sobre el resultado de la recomendación."
-    )
-    justificacion: str | None = Field(
-        default=None,
-        description="Justificación de la recomendación basada en los criterios de selección.",
-    )
+    mensaje: str
+    justificacion: str | None = None
     regla: str | None = Field(
         default=None,
-        description="Identificador de la regla disparada ((ej. R01-Ofrecer-Chiles-Rellenos).)",
+        description="Regla disparada (ej. R01-Coincidencia-Exacta).",
     )
+    categoria: str | None = None
+    sabor: str | None = None
+    descripcion: str | None = None
+    porciones: str | None = None
+    pagina: int | None = Field(default=None, description="Página del compendio PDF.")
+
+
+class ResultadoRecomendacion(BaseModel):
+    estado: Literal["exito", "alternativas", "sin_resultado", "error"]
+    mensaje: str
+    recomendaciones: list[Recomendacion] = Field(default_factory=list)
+
+
+class OpcionesDisponibles(BaseModel):
+    categorias: list[str]
+    ingredientes: list[str]

@@ -4,16 +4,19 @@ Sistema de selección de refacciones guatemaltecas V.1
 
 ## Descripción del proyecto
 
-Sistema experto desarrollado en Python para recomendar refacciones guatemaltecas de acuerdo con las características de la preparación y los ingredientes disponibles.
+Sistema experto desarrollado en Python para recomendar comidas guatemaltecas de acuerdo con las características de la categoría y sus ingredientes disponibles.
 
 El sistema utiliza CLIPS mediante la librería `clipspy` para procesar las reglas de conocimiento y FastAPI para exponer el motor experto mediante una API REST.
 
 Actualmente el sistema puede recomendar:
 
-- Chiles Rellenos
 - Shucos
 - Garnachas
-- Ninguna, cuando no se cumplen las condiciones necesarias
+- Tostadas
+- Rellenitos
+- Plátanos en mole
+- Pollo Guisado
+- Puede retornar opciones secundarias, si no se cumplen las condiciones necesarias.
 
 ## 🚀 Guía para Crear y Subir tu Rama al Proyecto
 
@@ -116,7 +119,20 @@ http://127.0.0.1:8000/docs
 ```
 
 ### Captura de prueba realizada
-![alt text](image.png)
+![alt text](/capturas/fastApiActualizada.png)
+
+### Renderizado en HTML
+
+Con la API en ejecución, dirigete a la carpeta `fronted` busca el archivo `index.html`, entra al archivo y haz clic derecho en cualquier parte sobre el archivo y selecciona ** Open with Live Server**, verás la página diseñada.
+
+![alt text](/capturas/imagePagina.png)
+
+### Página de recomendaciones
+
+La API se consume en la página de recomendaciones, donde el usuario escoge la categoría y un ingrediente, python procesa la solicitud y devuelve una respuesta.
+
+![alt text](/capturas/imageRecomendaciones.png)
+
 
 ## Proceso para unir los últimos cambios de la rama main
 
