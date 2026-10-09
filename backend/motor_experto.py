@@ -2,7 +2,7 @@ from pathlib import Path
 
 import clips
 
-RUTA_CLP = Path(__file__).resolve().parent / "conocimiento.clp"
+RUTA_CLP = Path(__file__).resolve().parent / "conocimientoV2.clp"
 
 
 def _nuevo_entorno() -> clips.Environment:

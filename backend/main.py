@@ -2,14 +2,14 @@
 Backend del recomendador: FastAPI + CLIPS (clipspy)
 
 Instalar:  pip install fastapi uvicorn clipspy
-Ejecutar:  uvicorn main:app --reload
+Ejecutar desde la raíz del proyecto:  python -m uvicorn backend.main:app --reload
 """
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
-from modelos import OpcionesDisponibles, ResultadoRecomendacion, SolicitudRecomendacion
-from motor_experto import evaluar_recomendacion, obtener_opciones
+from .modelos import OpcionesDisponibles, ResultadoRecomendacion, SolicitudRecomendacion
+from .motor_experto import evaluar_recomendacion, obtener_opciones
 
 app = FastAPI(title="Recomendador del comedor")
 
