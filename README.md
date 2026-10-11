@@ -121,9 +121,12 @@ http://127.0.0.1:8000/docs
 ### Captura de prueba realizada
 ![alt text](/capturas/fastApiActualizada.png)
 
-### Renderizado en HTML
+### Pasos para renderizar en HTML
 
-Con la API en ejecución, dirigete a la carpeta `fronted` busca el archivo `index.html`, entra al archivo y haz clic derecho en cualquier parte sobre el archivo y selecciona ** Open with Live Server**, verás la página diseñada.
+Con la API en ejecución:
+- Dirigete a la carpeta `fronted` busca el archivo `index.html` 
+- Entra al archivo y haz clic derecho en cualquier parte sobre el archivo y selecciona **Open with Live Server**
+- Verás la página diseñada.
 
 ![alt text](/capturas/imagePagina.png)
 
