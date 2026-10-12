@@ -36,6 +36,26 @@ function llenarSelect(select, valores, textoPorDefecto) {
   valores.forEach((v) => select.add(new Option(etiqueta(v), v)));
 }
 
+// Opciones recibidas del backend (se guardan para filtrar sin pedirlas de nuevo)
+let opciones = {
+  categorias: [],
+  ingredientes: [],
+  ingredientes_por_categoria: {},
+};
+
+// Muestra solo los ingredientes de la categoría elegida (o todos si es "cualquiera")
+function actualizarIngredientes() {
+  const cat = selCategoria.value;
+  const lista =
+    cat === "cualquiera"
+      ? opciones.ingredientes
+      : (opciones.ingredientes_por_categoria[cat] ?? []);
+
+  const previo = selIngrediente.value; // conservar la selección si sigue siendo válida
+  llenarSelect(selIngrediente, lista, "Cualquier ingrediente");
+  if (lista.includes(previo)) selIngrediente.value = previo;
+}
+
 function mostrarMensaje(texto, esError = false) {
   mensaje.textContent = texto;
   mensaje.classList.toggle("is-error", esError);
@@ -46,11 +66,14 @@ async function cargarOpciones() {
   try {
     const res = await fetch(`${API}/opciones`);
     if (!res.ok) throw new Error();
-    const data = await res.json();
-    llenarSelect(selCategoria, data.categorias, "Cualquier categoría");
-    llenarSelect(selIngrediente, data.ingredientes, "Cualquier ingrediente");
+    opciones = await res.json();
+    llenarSelect(selCategoria, opciones.categorias, "Cualquier categoría");
+    actualizarIngredientes();
   } catch {
-    mostrarMensaje("No se pudieron cargar las opciones. Intenta más tarde.", true);
+    mostrarMensaje(
+      "No se pudieron cargar las opciones. Intenta más tarde.",
+      true,
+    );
   }
 }
 
@@ -79,7 +102,9 @@ function crearItem(r) {
   desc.append(titulo, meta, texto, porque);
 
   const nivel = document.createElement("div");
-  nivel.className = "reco-nivel" + (r.nivel === "alternativa" ? " reco-nivel--alternativa" : "");
+  nivel.className =
+    "reco-nivel" +
+    (r.nivel === "alternativa" ? " reco-nivel--alternativa" : "");
   nivel.textContent = NIVELES[r.nivel] ?? "";
 
   li.append(desc, nivel);
@@ -90,9 +115,15 @@ async function recomendar(evento) {
   evento.preventDefault(); // evita que el formulario recargue la página
 
   resultado.replaceChildren();
-  const cuerpo = { categoria: selCategoria.value, ingrediente: selIngrediente.value };
+  const cuerpo = {
+    categoria: selCategoria.value,
+    ingrediente: selIngrediente.value,
+  };
 
-  if (cuerpo.categoria === "cualquiera" && cuerpo.ingrediente === "cualquiera") {
+  if (
+    cuerpo.categoria === "cualquiera" &&
+    cuerpo.ingrediente === "cualquiera"
+  ) {
     mostrarMensaje("Elige al menos una categoría o un ingrediente.", true);
     return;
   }
@@ -110,7 +141,10 @@ async function recomendar(evento) {
 
     if (!res.ok) {
       const err = await res.json().catch(() => ({}));
-      mostrarMensaje(typeof err.detail === "string" ? err.detail : "Ocurrió un error.", true);
+      mostrarMensaje(
+        typeof err.detail === "string" ? err.detail : "Ocurrió un error.",
+        true,
+      );
       return;
     }
 
@@ -122,7 +156,10 @@ async function recomendar(evento) {
       zona.hidden = false;
       zona.scrollIntoView({ behavior: "smooth", block: "start" });
     } else {
-      mostrarMensaje(data.mensaje || "No encontramos un platillo con esas características.", true);
+      mostrarMensaje(
+        data.mensaje || "No encontramos un platillo con esas características.",
+        true,
+      );
     }
   } catch {
     mostrarMensaje("No se pudo conectar con el servidor.", true);
@@ -132,5 +169,6 @@ async function recomendar(evento) {
   }
 }
 
+selCategoria.addEventListener("change", actualizarIngredientes);
 form.addEventListener("submit", recomendar);
 cargarOpciones();

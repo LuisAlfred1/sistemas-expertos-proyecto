@@ -47,3 +47,7 @@ class ResultadoRecomendacion(BaseModel):
 class OpcionesDisponibles(BaseModel):
     categorias: list[str]
     ingredientes: list[str]
+    ingredientes_por_categoria: dict[str, list[str]] = Field(
+        default_factory=dict,
+        description="Ingredientes que aparecen en los platillos de cada categoría.",
+    )

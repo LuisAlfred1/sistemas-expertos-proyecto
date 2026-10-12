@@ -2,6 +2,8 @@ from pathlib import Path
 
 import clips
 
+# Usar el archivo actualizado: "conocimientoV2.clp"
+# El archivo "conocimiento.clp" queda descartado.
 RUTA_CLP = Path(__file__).resolve().parent / "conocimientoV2.clp"
 
 
@@ -28,11 +30,19 @@ def _hechos(env: clips.Environment, plantilla: str) -> list[dict]:
 
 
 def obtener_opciones() -> dict:
-    """Categorías e ingredientes leídos de la base de conocimiento."""
+    """Categorías, ingredientes y qué ingredientes pertenecen a cada categoría."""
     platillos = _hechos(_nuevo_entorno(), "platillo")
+
+    por_categoria: dict[str, set[str]] = {}
+    for p in platillos:
+        por_categoria.setdefault(p["categoria"], set()).update(p["ingredientes"])
+
     return {
-        "categorias": sorted({p["categoria"] for p in platillos}),
-        "ingredientes": sorted({i for p in platillos for i in p["ingredientes"]}),
+        "categorias": sorted(por_categoria),
+        "ingredientes": sorted({i for ings in por_categoria.values() for i in ings}),
+        "ingredientes_por_categoria": {
+            c: sorted(ings) for c, ings in sorted(por_categoria.items())
+        },
     }
 
 
