@@ -23,6 +23,16 @@ const NIVELES = {
   alternativa: "Opción alternativa",
 };
 
+// menu de imagenes para platillos recomendados
+const IMAGENES_PLATILLOS = {
+  "Tostadas de guacamol": "images/menu/tostadas.jpg",
+  Garnachas: "images/menu/garnachas.jpg",
+  Shucos: "images/menu/shucos.jpg",
+  "Pollo guisado": "images/menu/pollo-guisado.jpg",
+  "Platanos en mole": "images/menu/mole-de-platano.jpg",
+  "Rellenitos de platano": "images/menu/rellenitos.jpg",
+};
+
 const form = document.getElementById("rform");
 const selCategoria = document.getElementById("selCategoria");
 const selIngrediente = document.getElementById("selIngrediente");
@@ -107,7 +117,22 @@ function crearItem(r) {
     (r.nivel === "alternativa" ? " reco-nivel--alternativa" : "");
   nivel.textContent = NIVELES[r.nivel] ?? "";
 
-  li.append(desc, nivel);
+  //seccion para imagen del paltillo recomendado
+  const media = document.createElement("div");
+  media.className = "reco-media";
+  media.append(nivel);
+
+  const rutaImagen = IMAGENES_PLATILLOS[r.platillo];
+  if (rutaImagen) {
+    const imagen = document.createElement("img");
+    imagen.className = "reco-imagen";
+    imagen.src = rutaImagen;
+    imagen.alt = r.platillo;
+    imagen.loading = "lazy";
+    media.append(imagen);
+  }
+
+  li.append(desc, media);
   return li;
 }
 
