@@ -1,4 +1,4 @@
-# SistemaComedorExperto
+# SaborChapínExperto
 
 Sistema de selección de comidas guatemaltecas V.1
 
