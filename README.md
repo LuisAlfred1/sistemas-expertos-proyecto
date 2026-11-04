@@ -1,6 +1,6 @@
-# SistemaRefacciónExperto
+# SaborChapínExperto
 
-Sistema de selección de refacciones guatemaltecas V.1
+Sistema de selección de comidas guatemaltecas V.1
 
 ## Descripción del proyecto
 
