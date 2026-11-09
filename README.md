@@ -179,3 +179,17 @@ Si en el paso 1 decidiste guardar tus cambios con `git stash`, ahora puedes trae
 git stash pop
 ```
 
+# Testing - 13/11/2026
+
+Se realizaron los tests correspondientes para la lógica del motor experto en el archivo `test_motor.py`, basado a las reglas creadas en `conocimientoV2.clp`.
+
+> [!IMPORTANT]
+> Se crearon tests de funciones con distintos escenarios para cada una de las reglas establecidas.
+
+Resultado: **Aprobado**, la prueba se ejecutó con éxito y el código funciona exactamente como se esperaba.
+  
+![alt text](/capturas/tests.png)
+
+Adicionalmente hay dos archivos desactualizados: `test_main.py` y `prueba.py` que pertenecen a la versión 1 correspondiente a las reglas del archivo `conocimiento.clp`. Estas pruebas se ejecutaron pero fallaron, debido a los cambios realizados en la base de conocimientos (Las reglas cambiaron en la versión 2 correspondiente al archivo `conocimientoV2.clp`).
+
+![alt text](/capturas/testError.png)
