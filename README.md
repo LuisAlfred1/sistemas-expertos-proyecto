@@ -181,15 +181,53 @@ git stash pop
 
 # Testing - 13/11/2026
 
-Se realizaron los tests correspondientes para la lógica del motor experto en el archivo `test_motor.py`, basado a las reglas creadas en `conocimientoV2.clp`.
+Se ejecutó la suite de pruebas del proyecto usando el entorno virtual del repositorio:
+
+```bash
+python -m pytest -v
+```
+
+## Resumen general
+
+- Total ejecutadas: 13
+- Aprobadas: 8
+- Fallidas: 5
+- Porcentaje de aprobación: 61.54%
 
 > [!IMPORTANT]
-> Se crearon tests de funciones con distintos escenarios para cada una de las reglas establecidas.
+> La versión actual del motor experto y de la lógica implementada en `conocimientoV2.clp` quedó validada en la mayoría de los casos; los fallos actuales corresponden a pruebas heredadas de una versión anterior del proyecto (`test_main.py`) que apuntan a rutas y reglas ya no vigentes.
 
-Resultado: **Aprobado**, la prueba se ejecutó con éxito y el código funciona exactamente como se esperaba.
-  
-![alt text](/capturas/tests.png)
+## Pruebas aprobadas (`tests/test_motor.py`)
 
-Adicionalmente hay dos archivos desactualizados: `test_main.py` y `prueba.py` que pertenecen a la versión 1 correspondiente a las reglas del archivo `conocimiento.clp`. Estas pruebas se ejecutaron pero fallaron, debido a los cambios realizados en la base de conocimientos (Las reglas cambiaron en la versión 2 correspondiente al archivo `conocimientoV2.clp`).
+| Prueba | Entradas | Resultado esperado | Resultado obtenido | Estado |
+|---|---|---|---|---|
+| `test_opciones_disponibles` | `obtener_opciones()` | Debe devolver categorías `antojito`, `plato_fuerte`, `postre` e ingredientes clave (`pollo`, `tortilla`, `platano`) | Las categorías e ingredientes coinciden con la estructura esperada | Aprobada |
+| `test_coincidencia_exacta` | `("antojito", "tortilla")` | Estado `exito`, platillos `{Tostadas de guacamol, Garnachas}`, regla `R01-Coincidencia-Exacta`, puntaje 100 | Coincide exactamente con el resultado esperado | Aprobada |
+| `test_recomendacion_categoria` | `("plato_fuerte", "cualquiera")` | Debe devolver recomendación por categoría y regla `R02-Solo-Categoria` | Se obtiene `Pollo guisado` con nivel `categoria` | Aprobada |
+| `test_recomendacion_ingrediente` | `("cualquiera", "canela")` | Debe devolver los platillos que contienen `canela` y regla `R03-Solo-Ingrediente` | Los resultados coinciden con los platillos esperados | Aprobada |
+| `test_recomendaciones_alternativas` | `("antojito", "pollo")` | Debe devolver alternativas con nivel `alternativa`, puntaje 50 y reglas `R04-Alternativa-Por-Categoria` / `R05-Alternativa-Por-Ingrediente` | Las alternativas coinciden con los nombres esperados y sus reglas | Aprobada |
+| `test_categoria_invalida` | `("comida", "tortilla")` | Debe lanzar `ValueError` | Se lanzó correctamente la excepción | Aprobada |
+| `test_ingrediente_invalido` | `("antojito", "pizza")` | Debe lanzar `ValueError` | Se lanzó correctamente la excepción | Aprobada |
+| `test_seleccion_invalida` | `("cualquiera", "cualquiera")` | Debe lanzar `ValueError` | Se lanzó correctamente la excepción | Aprobada |
 
-![alt text](/capturas/testError.png)
+## Pruebas fallidas (`tests/test_main.py`)
+
+Estas pruebas pertenecen a la versión 1 del sistema y ya no son compatibles con la versión actual del proyecto basada en `conocimientoV2.clp`.
+
+| Prueba | Entradas | Resultado esperado | Resultado obtenido | Estado |
+|---|---|---|---|---|
+| `test_r01_chiles_rellenos` | `POST /api/v1/evaluar` con JSON `{elaborado: true, lleva_carne: true, base_pan: false, tortilla: false, ingredientes_disponibles: []}` | `status_code == 200` y resultado `Chiles Rellenos` con regla `R01-Ofrecer-Chiles-Rellenos` | `404 Not Found` | Fallida |
+| `test_r02_ingredientes_insuficientes_elaborado` | `POST /api/v1/evaluar` con JSON `{elaborado: true, lleva_carne: false, base_pan: false, tortilla: false, ingredientes_disponibles: []}` | `status_code == 200` y `estado == ingrediente_insuficientes` | `404 Not Found` | Fallida |
+| `test_r03_shucos` | `POST /api/v1/evaluar` con JSON `{elaborado: false, lleva_carne: false, base_pan: true, tortilla: false, ingredientes_disponibles: []}` | `status_code == 200` y resultado `Shucos` con regla `R03-Ofrecer-Shucos` | `404 Not Found` | Fallida |
+| `test_r04_garnachas` | `POST /api/v1/evaluar` con JSON `{elaborado: false, lleva_carne: false, base_pan: false, tortilla: true, ingredientes_disponibles: []}` | `status_code == 200` y resultado `Garnachas` con regla `R04-Ofrecer-Garnachas` | `404 Not Found` | Fallida |
+| `test_r05_ingredientes_insuficientes_no_elaborado` | `POST /api/v1/evaluar` con JSON `{elaborado: false, lleva_carne: false, base_pan: false, tortilla: false, ingredientes_disponibles: []}` | `status_code == 200` y `estado == ingrediente_insuficientes` | `404 Not Found` | Fallida |
+
+## Evidencia visual
+
+![Resultado de las pruebas aprobadas](./capturas/tests.png)
+
+![Resultado de las pruebas heredadas fallidas](./capturas/testError.png)
+
+## Conclusión
+
+La lógica del motor experto actual quedó validada en la mayoría de sus escenarios. Las pruebas que fallan pertenecen a una implementación antigua del backend (`test_main.py`), no a la versión actual del motor de recomendaciones, y por ello se debe considerar que no representan un error funcional del sistema actualizado, sino una desactualización de pruebas y rutas API.
